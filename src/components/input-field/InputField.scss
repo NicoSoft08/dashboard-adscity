@@ -1,0 +1,78 @@
+@import '../../styles/fonts';
+@import '../../styles/variables';
+
+.Input-field {
+    max-width: 600px;
+    width: 100%;
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    font-family: 'Ubuntu', sans-serif;
+
+    label {
+        text-align: start;
+        color: $gray-dark;
+        font-weight: $font-regular;
+        padding: 10px 0;
+
+        .compulsory {
+            color: red;
+        }
+    }
+
+    input[type=address],
+    input[type=city],
+    input[type=country],
+    input[type=date],
+    input[type=email],
+    input[type=password],
+    input[type=time],
+    input[type=text],
+    input[type=number],
+    input[type=textarea],
+    select {
+        outline: none;
+        font-size: 15px;
+        padding: 10px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: $font-light;
+        appearance: none;
+        border: 1px solid $dark;
+    }
+
+    option {
+        font-weight: $font-light;
+        font-size: 14px;
+        padding: 10px 15px;
+        font-family: 'Ubuntu', sans-serif;
+        outline: none;
+    }
+
+
+
+    .radio-group {
+        label {
+            padding: 10px 0;
+            font-weight: $font-light;
+        }
+
+        input[type=radio] {
+            font-size: 15px;
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: $font-light;
+        }
+    }
+
+    .checkbox-group {
+        label {
+            padding: 10px 0;
+            font-weight: $font-light;
+        }
+
+        input[type=checkbox] {
+            font-size: 15px;
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: $font-light;
+        }
+    }
+}

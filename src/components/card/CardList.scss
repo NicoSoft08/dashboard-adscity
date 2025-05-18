@@ -1,0 +1,18 @@
+.card-list {
+    display: grid;
+    gap: 10px; // Espacement entre les cartes
+    padding: 10px;
+    
+    // 🖥️ Desktop (4 colonnes)
+    grid-template-columns: repeat(4, 1fr);
+
+    // 📱 Tablette (4 colonnes)
+    @media (max-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    // 📱 Mobile (2 colonne)
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

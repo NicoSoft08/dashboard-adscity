@@ -1,0 +1,289 @@
+@import '../../styles/fonts';
+@import '../../styles/variables';
+
+
+.card-container {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background-color: $white;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    z-index: 1;
+
+    .sold-badge {
+        position: absolute;
+        top: 20px;
+        left: -40px; // décale vers la gauche pour le centrage diagonal
+        background: rgba(255, 255, 255, 0.8); // léger fond blanc semi-transparent
+        color: $danger;
+        padding: 5px 40px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transform: rotate(-45deg); // 👈 rotation oblique
+        border: 2px solid $danger;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+
+    .card-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .badge-sponsored {
+        position: absolute;
+        top: 55%;
+        left: 8px;
+        background-color: #ffc107;
+        color: #fff;
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: bold;
+        /* important pour éviter d'empêcher les clics sur l'image */
+    }
+
+
+    .card-content {
+        padding: 10px;
+        position: relative;
+
+
+        .card-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            font-size: 14px;
+            font-weight: $font-regular;
+            margin: 0 0 5px;
+            text-align: start;
+        }
+
+
+        .card-price {
+            font-size: 13px;
+            color: $secondary-color;
+            margin: 0 0 5px;
+            text-align: start;
+
+            display: flex;
+            align-items: center;
+
+            .delievery-icon {
+                margin-left: 8px;
+                color: $light;
+            }
+        }
+
+
+        .card-city {
+            font-size: 12px;
+            color: #777;
+            text-align: start;
+        }
+
+
+        .announcer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            bottom: 90%;
+            right: 10px;
+            width: 60px;
+            height: 60px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: $white;
+
+            .avatar {
+                width: 90%;
+                height: 90%;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+
+
+            .card-date,
+            .card-viewCount {
+                font-size: 12px;
+                color: #aaa;
+
+                svg {
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+
+
+    .card-actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 98%;
+        display: flex;
+        justify-content: space-between;
+
+
+        .like-button {
+            border: 1px solid #343a40;
+            height: 35px;
+            width: 35px;
+            border-radius: 50%;
+            background-color: transparent;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: rgba(255, 0, 0, 0.1);
+
+                svg {
+                    // color: #ff4d4d;
+                    transform: scale(1.1);
+                }
+            }
+
+            &.active {
+                svg {
+                    color: #ff0000;
+                    fill: #ff0000;
+                }
+            }
+
+            svg {
+                transition: transform 0.3s ease;
+            }
+        }
+
+        .options-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #343a40;
+            margin: 8px;
+        }
+
+
+        .options-menu {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            width: 100%;
+            left: 0;
+            background-color: $white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+
+            button {
+                padding: 8px 12px;
+                width: 100%;
+                text-align: left;
+                border: none;
+                cursor: pointer;
+                background-color: transparent;
+                transition: background-color 0.3s ease;
+
+                span {
+                    margin-left: 8px;
+                    color: $gray;
+                    font-size: 14px;
+                    font-weight: $font-regular;
+                    font-family: 'Ubuntu', sans-serif;
+                }
+
+                svg {
+                    color: $gray;
+                }
+            }
+
+        }
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-around;
+
+        button {
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 13px;
+            font-weight: $font-light;
+            border: none;
+            cursor: pointer;
+        }
+    }
+
+
+    .card-stats {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 10px;
+
+        span {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 8px;
+        }
+    }
+
+    .report-success {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: $white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+
+        .content {
+            padding: 0 10px;
+            text-align: center;
+
+            .message {
+                font-weight: $font-regular;
+                color: $dark;
+                font-size: 15px;
+            }
+
+            .text {
+                font-weight: $font-light;
+                color: $dark;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+.card-container.active {
+    opacity: 1;
+}
+
+.card-container.inactive {
+    opacity: 0.6;
+}
+
+.card-container:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
