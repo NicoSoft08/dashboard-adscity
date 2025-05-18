@@ -1,0 +1,36 @@
+@import './variables';
+
+
+.user-profile {
+    // position: relative;
+    // display: inline-block;
+
+
+    .profile-container {
+        position: relative;
+        // width: 45px;
+        // height: 45px;
+        
+
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ccc; /* Optionnel : bordure autour de l'image */
+        }
+    }
+
+
+    .online-indicator {
+        position: absolute;
+        // top: 23px;
+        // right: 10px;
+        width: 8px;
+        height: 8px;
+        background-color: #4caf50; /* Couleur verte */
+        border-radius: 50%;
+        border: 2px solid white; /* Bordure blanche pour démarquer le point */
+    }
+}

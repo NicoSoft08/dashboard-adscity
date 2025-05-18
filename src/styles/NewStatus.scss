@@ -1,0 +1,383 @@
+@import './fonts';
+@import './variables';
+
+// Status Creator Component Styles
+.status-creator {
+    position: relative;
+    width: 90%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    margin: 6rem auto;
+
+    .creator-header {
+        display: flex;
+        align-items: center;
+        padding: 16px 20px;
+        border-bottom: 1px solid #eee;
+
+        h2 {
+            margin: 0;
+            font-size: 18px;
+            color: $dark;
+
+            margin-left: 10px;
+        }
+
+        svg {
+            color: $dark;
+            cursor: pointer;
+        }
+
+        .back {
+            cursor: pointer;
+            background: transparent;
+
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+
+            svg {
+                font-size: 14px;
+                color: $dark;
+            }
+
+            &:hover {
+                background: $white;
+                color: $black;
+            }
+        }
+    }
+
+    .creator-content {
+        padding: 20px;
+
+        .type-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+
+            .type-button {
+                flex: 1;
+                display: flex;
+                font-family: 'Ubuntu', sans-serif;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                background-color: #f9f9f9;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                svg {
+                    font-size: 1.5rem;
+                    margin-bottom: 8px;
+                    color: #666;
+                }
+
+                span {
+                    font-size: 0.9rem;
+                    color: #666;
+                }
+
+                &:hover {
+                    background-color: #f0f0f0;
+                }
+
+                &.active {
+                    border-color: #4CAF50;
+                    background-color: rgba(76, 175, 80, 0.1);
+
+                    i,
+                    span {
+                        color: #4CAF50;
+                    }
+                }
+            }
+        }
+
+        .status-preview {
+            width: 100%;
+            height: 300px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+
+            &.text-preview {
+                padding: 10px;
+
+                .preview-text {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    color: white;
+                    font-size: 1.5rem;
+                    word-break: break-word;
+                    overflow: hidden;
+
+                    &.bold {
+                        font-weight: bold;
+                    }
+
+                    &.italic {
+                        font-style: italic;
+                    }
+
+                    &.handwritten {
+                        font-family: 'Caveat', cursive;
+                        font-size: 1.8rem;
+                    }
+                }
+            }
+
+            &.media-preview {
+                background-color: #f0f0f0;
+
+                img,
+                video {
+                    max-width: 100%;
+                    max-height: 100%;
+                    object-fit: contain;
+                }
+
+                .no-media {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    color: #999;
+
+                    svg {
+                        font-size: 3rem;
+                        margin-bottom: 15px;
+                    }
+
+                    p {
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+
+        .text-input-container {
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%;
+
+            .status-text-input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 1rem;
+                resize: none;
+                font-weight: $font-light;
+                font-family: 'Ubuntu', sans-serif;
+                transition: border-color 0.2s ease;
+
+                &:focus {
+                    outline: none;
+                    border-color: #4CAF50;
+                }
+            }
+
+            .text-counter {
+                position: absolute;
+                bottom: 10px;
+                right: 15px;
+                font-size: 0.8rem;
+                color: #999;
+            }
+        }
+
+        .style-options {
+            margin-bottom: 20px;
+
+            .color-picker,
+            .font-picker {
+                margin-bottom: 15px;
+
+                label {
+                    display: block;
+                    font-size: 0.9rem;
+                    font-weight: $font-light;
+                    font-family: 'Ubuntu', sans-serif;
+                    color: #666;
+                    margin-bottom: 8px;
+                }
+            }
+
+            .color-options {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+
+                .color-option {
+                    font-weight: $font-light;
+                    font-family: 'Ubuntu', sans-serif;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    transition: transform 0.2s ease;
+
+                    &:hover {
+                        transform: scale(1.1);
+                    }
+
+                    &.selected {
+                        box-shadow: 0 0 0 2px white, 0 0 0 4px #4CAF50;
+                    }
+                }
+            }
+
+            .font-options {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+
+                .font-option {
+                    font-weight: $font-light;
+                    font-family: 'Ubuntu', sans-serif;
+                    padding: 8px 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    background: none;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        background-color: #f0f0f0;
+                    }
+
+                    &.selected {
+                        border-color: #4CAF50;
+                        background-color: rgba(76, 175, 80, 0.1);
+                        color: #4CAF50;
+                    }
+                }
+            }
+        }
+
+        .privacy-options {
+            margin-bottom: 25px;
+
+            label {
+                display: block;
+                font-size: 0.9rem;
+                color: #666;
+                margin-bottom: 8px;
+                font-weight: $font-light;
+                font-family: 'Ubuntu', sans-serif;
+            }
+
+            .privacy-selector, 
+            option {
+                width: 100%;
+                padding: 10px 12px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 1rem;
+                background-color: white;
+                font-weight: $font-light;
+                font-family: 'Ubuntu', sans-serif;
+
+                &:focus {
+                    outline: none;
+                    border-color: #4CAF50;
+                }
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+
+            button {
+                flex: 1;
+                padding: 12px;
+                border-radius: 8px;
+                font-size: 1rem;
+                font-weight: 500;
+                cursor: pointer;
+                font-family: 'Ubuntu', sans-serif;
+                transition: all 0.2s ease;
+
+                &.cancel-button {
+                    background-color: #f0f0f0;
+                    border: 1px solid #ddd;
+                    color: #666;
+
+                    &:hover {
+                        background-color: #e0e0e0;
+                    }
+                }
+
+                &.create-button {
+                    background-color: $secondary-color;
+                    border: none;
+                    color: white;
+
+                    &:hover {
+                        background-color: darken($secondary-color, 10%);
+                    }
+
+                    &:disabled {
+                        background-color: #a5d6a7;
+                        cursor: not-allowed;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Media queries for responsiveness
+@media (max-width: 768px) {
+    .status-creator {
+        width: 95%;
+        max-height: 95vh;
+
+        .creator-content {
+            .status-preview {
+                height: 250px;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .status-creator {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+
+        .creator-content {
+            .status-preview {
+                height: 220px;
+            }
+
+            .action-buttons {
+                position: sticky;
+                bottom: 0;
+                background-color: white;
+                padding-top: 15px;
+            }
+        }
+    }
+}

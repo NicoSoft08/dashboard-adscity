@@ -1,0 +1,570 @@
+@import './fonts';
+@import './variables';
+
+
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+
+    .modal-preview {
+        width: 100%;
+        height: 300px;
+        object-fit: contain;
+        border-radius: 10px;
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: $font-light;
+            background: transparent;
+            border: none;
+            outline: none;
+
+            &.btn-confirm {
+                background: $two;
+                color: $white;
+
+                &:hover {
+                    background: darken($two, 10%);
+                }
+            }
+
+            &.btn-cancel {
+                background: $danger;
+                color: $white;
+
+                &:hover {
+                    background: darken($danger, 10%);
+                }
+            }
+        }
+    }
+
+    .edit-form {
+
+        .input-field,
+        option {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: start;
+            outline: none;
+            font-size: 14px;
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: $font-light;
+        }
+
+        .search-field,
+        .displayName-field {
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            .input-field {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                text-align: start;
+                outline: none;
+                font-size: 14px;
+                font-family: 'Ubuntu', sans-serif;
+                font-weight: $font-light;
+
+                &.error {
+                    border: 1px solid $danger;
+                    background-color: #ffcccb;
+                }
+            }
+
+            .search-icon {
+                position: absolute;
+                top: 18px;
+                right: 10px;
+                color: $dark;
+            }
+        }
+
+        .city-field,
+        .address-field,
+        .bio-field {
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            .input-field {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                text-align: start;
+                outline: none;
+                font-size: 14px;
+                font-family: 'Ubuntu', sans-serif;
+                font-weight: $font-light;
+
+            }
+        }
+    }
+}
+
+.profile-card {
+    margin-top: 6rem;
+    background-color: $white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+        margin-top: 9rem;
+    }
+
+    .profile-cover {
+        position: relative;
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+
+        .edit-cover-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: $white;
+            border: none;
+            padding: 6px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                background: rgba(0, 0, 0, 0.8);
+            }
+        }
+    }
+
+    .profile-content {
+        padding: 20px;
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+
+            .profile-avatar-container {
+                position: relative;
+
+                .edit-avatar-btn {
+                    position: absolute;
+                    bottom: 5px;
+                    right: 5px;
+                    background: $two;
+                    color: $white;
+                    border: none;
+                    padding: 5px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    transition: 0.3s;
+                    display: flex;
+                    align-items: center;
+
+                    &:hover {
+                        background: darken($two, 10%);
+                    }
+                }
+            }
+
+            .profile-info {
+                display: flex;
+                align-items: flex-end;
+                margin-top: -60px;
+                width: 100%;
+
+                .profile-avatar {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    border: 4px solid $white;
+                }
+
+                .profile-details {
+                    margin-left: 15px;
+                    display: flex;
+                    // align-items: flex-end;
+                    justify-content: space-between;
+                    width: 100%;
+
+                    @media (max-width: 768px) {
+                        flex-direction: column;
+                    }
+
+                    .profile-name {
+                        font-size: 22px;
+                        font-weight: bold;
+                        margin: 0;
+                        color: $dark;
+                    }
+
+                    .forfait {
+                        font-family: 'Ubuntu', sans-serif;
+                        font-size: 16px;
+                        background: $two;
+                        padding: 5px 10px;
+                        border-radius: 20px;
+                        color: $white;
+                        font-weight: $font-regular;
+                        border: none;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        width: fit-content;
+
+                        @media (max-width: 768px) {
+                            font-size: 14px;
+                        }
+
+                        svg {
+                            margin-right: 5px;
+                        }
+
+                        &:hover {
+                            background: lighten($two, 10%);
+                        }
+                    }
+
+                    .icon-spin {
+                        animation: spin 2s linear infinite;
+                    }
+
+                    .profile-username {
+                        font-size: 14px;
+                        color: $gray;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+.profile-edit-btn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: $two;
+    color: $white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-family: 'Ubuntu', sans-serif;
+
+    .icon-sm {
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+    }
+
+    &:hover {
+        background: darken($two, 10%);
+    }
+}
+
+.profile-bio {
+    margin-top: 15px;
+    color: $dark;
+    font-weight: $font-light;
+
+    p {
+        svg {
+            margin-left: 5px;
+            transition: color 0.3s ease;
+            color: $two;
+            cursor: pointer;
+
+            &:hover {
+                color: darken($two, 10%);
+            }
+        }
+    }
+}
+
+.profile-links {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profile-location,
+.profile-website {
+    display: flex;
+    align-items: center;
+    color: $gray;
+
+    .edit-icon {
+        margin-left: 5px;
+        transition: color 0.3s ease;
+        color: $two;
+        cursor: pointer;
+
+        &:hover {
+            color: darken($two, 10%);
+        }
+    }
+
+    .cog {
+        color: $orange;
+    }
+
+    .rejected {
+        color: $danger;
+        &:hover {
+            color: lighten($danger, 10%);
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: $two;
+    }
+
+    .icon-sm {
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+    }
+}
+
+.profile-link {
+    color: $primary;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.profile-stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+
+    div {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.stats-count {
+    font-weight: bold;
+    font-size: 18px;
+    color: $dark;
+    margin-right: 5px;
+}
+
+.stats-label {
+    font-size: 14px;
+    color: $gray;
+    font-weight: 300;
+}
+
+.activity {
+    background-color: $white;
+    border-radius: 8px;
+
+    h2 {
+        color: #333;
+    }
+
+    p {
+        font-size: 16px;
+        color: #333;
+        font-weight: $font-light;
+    }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+
+        @media (max-width: 768px) {
+            overflow-x: auto;
+            border-radius: 5px;
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 600px;
+            /* Ajuste la largeur minimale selon tes besoins */
+            border-collapse: collapse;
+            background-color: $white;
+
+            th,
+            td {
+                padding: 12px;
+                text-align: left;
+                font-weight: $font-light;
+                border-bottom: 1px solid #ddd;
+                white-space: nowrap;
+                /* Évite les retours à la ligne */
+            }
+
+            thead {
+                color: $dark;
+                background-color: #f5f5f5;
+
+                th {
+                    text-transform: uppercase;
+                    font-weight: $font-regular;
+                }
+            }
+
+            tbody tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+
+            tbody tr:hover {
+                background-color: #f1f1f1;
+            }
+        }
+    }
+}
+
+.switcher {
+    background: $white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+
+    .switcher-tabs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+
+
+        .switcher-tab {
+            display: flex;
+            align-items: center;
+            font-family: 'Ubuntu', sans-serif;
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            background-color: #f4f4f4;
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+                align-items: center;
+            }
+
+
+            &.active {
+                background-color: $two;
+                color: $white;
+                border-color: $two;
+                font-weight: $font-regular;
+
+                svg {
+                    margin-right: 10px;
+                    color: $white;
+                    font-weight: $font-light;
+                }
+
+                span {
+                    color: $white;
+                    font-weight: $font-light;
+                    font-size: 16px;
+
+                }
+            }
+
+            svg {
+                margin-right: 10px;
+                color: #333;
+                font-weight: $font-light;
+            }
+
+            span {
+                color: #333;
+                font-weight: $font-light;
+                font-size: 16px;
+
+            }
+        }
+    }
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+
+    @media (max-width: 768px) {
+        overflow-x: auto;
+        border-radius: 5px;
+        padding-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+        min-width: 600px;
+        /* Ajuste la largeur minimale selon tes besoins */
+        border-collapse: collapse;
+        background-color: $white;
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            font-weight: $font-light;
+            border-bottom: 1px solid #ddd;
+            white-space: nowrap;
+            /* Évite les retours à la ligne */
+        }
+
+        thead {
+            color: $dark;
+            background-color: #f5f5f5;
+
+            th {
+                text-transform: uppercase;
+                font-weight: $font-regular;
+            }
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+    }
+}

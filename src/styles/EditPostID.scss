@@ -1,0 +1,128 @@
+@import './fonts';
+@import './variables';
+
+.edit-post-id {
+    margin-top: 4rem;
+
+    @media (max-width: 768px) {
+        margin-top: 8rem;
+    }
+
+    .head {
+        display: flex;
+        align-items: center;
+        position: relative;
+        // justify-content: space-between;
+
+        h2 {
+            color: $dark;
+            margin-left: 10px;
+        }
+
+        svg {
+            color: $dark;
+            cursor: pointer;
+        }
+
+        .more-options {
+            position: absolute;
+            cursor: pointer;
+            right: 15px;
+
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+
+            svg {
+                font-size: 18px;
+                color: $dark;
+            }
+
+            &:hover {
+                background: #ddd;
+                color: $black;
+            }
+        }
+
+        .options-menu {
+            position: absolute;
+            right: 20px;
+            top: 60px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+
+            .options-menu-item {
+                padding: 12px 16px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                cursor: pointer;
+
+                &:hover {
+                    background: #f5f5f5;
+                }
+
+                svg {
+                    font-size: 14px;
+                    color: #666;
+                }
+
+                span {
+                    color: #333;
+                    font-weight: $font-light;
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+
+    .edit-form {
+        padding: 20px;
+        background-color: $white;
+        // margin-top: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        button {
+            margin: 10px 10px;
+            background-color: $two;
+            color: $white;
+            font-family: 'Ubuntu', sans-serif;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: $font-light;
+            font-size: 14px;
+
+
+            &:hover {
+                background-color: $three;
+            }
+        }
+    }
+
+    .charts {
+        padding: 20px;
+        background-color: $white;
+        // margin-top: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        h3 {
+            text-align: center;
+            font-size: 16px;
+            color: $dark;
+            font-weight: $font-regular;
+            text-transform: uppercase;
+            margin: 10px;
+        }
+    }
+}
