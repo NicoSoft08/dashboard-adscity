@@ -1,9 +1,79 @@
-import Cookies from 'js-cookie';
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
+import { collectDeviceInfo } from "../services";
 
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
+const createUser = async (address, city, country, email, password, firstName, lastName, phoneNumber, displayName, captchaToken) => {
+
+    try {
+        const response = await fetch(`${backendUrl}/api/auth/create-user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                address, city, country,
+                email, password, firstName,
+                lastName, phoneNumber, displayName, captchaToken
+            }),  // Si tu envoies le mot de passe, assure-toi que c'est sécurisé
+        });
+
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error('Erreur lors de la création de l\'utilisateur :', error);
+        throw error;
+    };
+};
+
+const signinUser = async (email, password, captchaToken) => {
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // 🔹 Vérifier si l'utilisateur est vérifié
+        if (!user.emailVerified) {
+            return {
+                success: false,
+                message: "Votre adresse email n'est pas vérifiée. Veuillez vérifier votre boîte de réception."
+            };
+        }
+
+        // 🔹 Récupérer le jeton Firebase
+        const idToken = await user.getIdToken();
+
+        // 🔹 Récupérer les informations sur le périphérique
+        const deviceInfo = await collectDeviceInfo();
+
+        // 🔹 Envoyer les données au backend
+        const response = await fetch(`${backendUrl}/api/auth/login-user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({ userID: user.uid, deviceInfo, captchaToken }),
+        });
+
+        const result = await response.json();
+        // Store the token in localStorage if login was successful
+        if (result.success) {
+            localStorage.setItem('token', idToken);
+            localStorage.setItem('user', JSON.stringify({
+                uid: user.uid,
+                email: user.email,
+                role: result.role
+            }));
+        }
+        
+        return result;
+    } catch (error) {
+        console.error('Erreur lors de la connexion de l\'utilisateur :', error);
+        throw error;
+    };
+};
 
 const logoutUser = async () => {
     try {
@@ -20,11 +90,6 @@ const logoutUser = async () => {
         });
 
         const result = await response.json();
-
-        Cookies.remove('authToken', {
-            path: '/',
-            domain: '.adscity.net'
-        });
 
         return { success: true, message: result.message || "Déconnexion réussie." };
 
@@ -227,11 +292,13 @@ const refuseDevice = async (deviceID, verificationToken) => {
 
 export {
     checkCode,
+    createUser,
     deleteUser,
     logoutUser,
     passwordReset,
     refuseDevice,
     sendVerificationCode,
+    signinUser,
     requestPasswordReset,
     verifyResetToken,
     validateDevice,
