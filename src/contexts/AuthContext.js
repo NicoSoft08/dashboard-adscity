@@ -1,10 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
-import { fetchMe, setUserOnlineStatus } from '../routes/user';
-import { auth } from '../firebaseConfig';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { fetchMe } from '../routes/user';
 import { Loading } from '../customs/index';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { logoutUser } from '../routes/auth';
 
 
 // Création du contexte d'authentification
@@ -23,102 +19,23 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        const checkAuth = async () => {
             setLoading(true);
-
-            try {
-                if (user) {
-                    const idToken = await user.getIdToken(user, true);
-                    const response = await fetchMe(idToken);
-
-                    if (response?.data) {
-                        setCurrentUser(user);
-                        setUserData(response.data);
-                        setUserRole(response.data.role);
-                        Cookies.set('authToken', idToken, {
-                            expires: 7,
-                            sameSite: 'None',
-                            secure: true,
-                            domain: '.adscity.net',
-                        });
-                    }
-                } else {
-                    // Essayer de récupérer via cookie (HTTP-only)
-                    const response = await fetchMe(); // sans token, juste cookie
-
-                    if (response?.data) {
-                        setUserData(response.data);
-                        setUserRole(response.data.role);
-                        setCurrentUser(null); // pas de Firebase ici
-                    }
-                }
-            } catch (error) {
+            const user = await fetchMe();
+            if (user) {
+                setCurrentUser(user.data.uid);
+                setUserData(user.data);
+                setUserRole(user.data.role || null);
+            } else {
                 setCurrentUser(null);
-                setUserData(null);
                 setUserRole(null);
-            } finally {
-                setLoading(false);
             }
-        });
+            setLoading(false);
+        };
 
-        return () => unsubscribe();
+        checkAuth();
     }, []);
 
-    // Function to handle logout
-    const logout = async () => {
-        try {
-            const user = auth.currentUser;
-
-            // 1. Update online status
-            if (user?.uid) {
-                try {
-                    const idToken = await user.getIdToken(true);
-                    await setUserOnlineStatus(user.uid, false, idToken);
-                    Cookies.remove('authToken', {
-                        path: '/',
-                        domain: '.adscity.net'
-                    });
-                } catch (statusError) {
-                    console.warn("Failed to update online status:", statusError);
-                    // Continue with logout even if this fails
-                }
-            }
-
-            // 2. Server-side logout
-            if (user) {
-                try {
-                    await logoutUser(user.uid);
-                } catch (serverError) {
-                    console.warn("Server logout failed:", serverError);
-                    // Continue with local logout even if server logout fails
-                }
-            }
-
-            // 3. Firebase signout
-            await signOut(auth);
-
-            // 4. Clear storage
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-
-            // 5. Return success for UI handling
-            return { success: true, message: "Déconnexion réussie." };
-        } catch (error) {
-            console.error("Error during logout:", error);
-
-            // Force signout in case of error
-            try {
-                await signOut(auth);
-            } catch (signOutError) {
-                console.error("Forced signout failed:", signOutError);
-            }
-
-            return {
-                success: false,
-                message: "Erreur lors de la déconnexion. Veuillez réessayer."
-            };
-        }
-    };
 
     if (loading) {
         return <Loading />
@@ -129,8 +46,8 @@ export const AuthProvider = ({ children }) => {
     const value = {
         currentUser,
         userData,
+        loading,
         userRole,
-        logout,
         setUserRole, // Include this if you need to update role elsewhere
     };
 
