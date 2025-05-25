@@ -1,10 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { fetchMe } from '../routes/user';
-import { auth } from '../firebaseConfig';
 import { Loading } from '../customs/index';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { logoutUser } from '../routes/auth';
 
 
 // Création du contexte d'authentification
@@ -23,80 +20,49 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        const checkAuthStatus = async () => {
             setLoading(true);
-
             try {
-                if (user) {
-                    // 🔐 Obtenir le token et le stocker en cookie cross-domain
-                    const idToken = await user.getIdToken(true);
+                // 1. Tenter de lire le cookie authToken
+                const authToken = Cookies.get('authToken');
 
-                    Cookies.set('authToken', idToken, {
-                        expires: 7,
-                        secure: true,
-                        sameSite: 'None',
-                        domain: '.adscity.net',
-                        path: '/',
-                    });
+                if (authToken) {
+                    // 2. Récupérer les données complètes de l'utilisateur via votre API privée
+                    const response = await fetchMe();
 
-                    setCurrentUser(user);
+                    if (response?.success && response.data) {
+                        // L'API a validé le token et renvoyé les données.
+                        // On peut créer un objet 'user' basique si nécessaire, ou utiliser directement userData.
+                        setCurrentUser({ uid: response.data.uid || null, email: response.data.email || null }); // ou seulement setUserData
+                        setUserData(response.data);
+                        setUserRole(response.data.role);
+                    } else {
+                        // L'API a rejeté le token (expiré, invalide, etc.)
+                        // Nettoyer l'état d'authentification local et le cookie invalide.
+                        setCurrentUser(null);
+                        setUserData(null);
+                        setUserRole(null);
+                        Cookies.remove('authToken', { domain: '.adscity.net', path: '/' }); // Supprimer le cookie
+                    }
                 } else {
-                    // 🔁 Peut-être que l'user est déjà loggé via cookie uniquement
+                    // Pas de cookie authToken, l'utilisateur n'est pas (ou plus) connecté.
                     setCurrentUser(null);
-                }
-
-                // 🔎 Récupérer l'utilisateur via l’API privée
-                const response = await fetchMe();
-
-                if (response?.success && response.data) {
-                    setUserData(response.data);
-                    setUserRole(response.data.role);
-                } else {
                     setUserData(null);
                     setUserRole(null);
                 }
-
-            } catch (err) {
-                console.error("Erreur AuthContext:", err);
+            } catch (error) {
+                console.error('Erreur lors de la récupération de la session:', error);
                 setCurrentUser(null);
-                setUserData(null);
                 setUserRole(null);
+                setUserData(null);
+                Cookies.remove('authToken', { domain: '.adscity.net', path: '/' });
             } finally {
                 setLoading(false);
             }
-        });
+        };
 
-        return () => unsubscribe();
+        checkAuthStatus();
     }, []);
-
-
-    // Function to handle logout
-    const logout = async () => {
-        try {
-            const user = auth.currentUser;
-
-            // 1. Supprimer le cookie
-            Cookies.remove('authToken', {
-                path: '/',
-                domain: '.adscity.net',
-            });
-
-            // 2. Déconnexion côté serveur (optionnel)
-            if (user) {
-                await logoutUser(user.uid); // Si tu veux notifier le serveur
-            }
-
-            // 3. Déconnexion Firebase
-            await signOut(auth);
-
-            setCurrentUser(null);
-            setUserData(null);
-            setUserRole(null);
-
-        } catch (error) {
-            console.error("Erreur logout:", error);
-        }
-    };
 
     if (loading) {
         return <Loading />
@@ -109,7 +75,6 @@ export const AuthProvider = ({ children }) => {
         userData,
         loading,
         userRole,
-        logout,
         setUserRole, // Include this if you need to update role elsewhere
     };
 
